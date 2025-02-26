@@ -1,6 +1,8 @@
 import React from "react";
 import {Formik, Form, Field, ErrorMessage} from "formik"; // to create form
 import * as Yup from "yup"; // import all from yup
+import { useNavigate } from "react-router-dom";
+
 
 function CreatePost(){
     const initialValues={
@@ -14,6 +16,8 @@ function CreatePost(){
         postText:Yup.string().required(),
         username: Yup.string().min(3).max(15).required(), 
     });
+    
+    let navigate=useNavigate();
 
     const onSubmit=(data)=>{
         fetch("http://localhost:3001/posts",{
@@ -25,10 +29,11 @@ function CreatePost(){
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log("Yuhuuu",data); 
+            navigate("/"); 
           }) 
           .catch((error) => console.error("Error fetching posts:", error));
     };
+
 
     return (
     <div className="CreatePostPage">
