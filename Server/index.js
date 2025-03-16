@@ -11,6 +11,11 @@ const db = require("./models");
 // Routers
 const postRouter = require("./routes/Posts");
 app.use("/posts", postRouter);
+const commentsRouter = require("./routes/Comments");
+app.use("/comments", commentsRouter);
+const userRouter = require("./routes/Users");
+app.use("/auth", userRouter);
+
 
 // Start API
 // When we start our API we want at the same time go through every table from models

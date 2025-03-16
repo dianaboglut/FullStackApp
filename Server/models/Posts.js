@@ -12,8 +12,14 @@ module.exports = (sequelize, DataTypes) => {
         username: {
             type: DataTypes.STRING,
             allowNull: false,
-        },
+        }, 
     });
 
+    // fvo
+    Posts.associate =(models)=>{
+        Posts.hasMany(models.Comments, {
+            onDelete: "cascade",
+        });
+    }
     return Posts;
 };
