@@ -4,7 +4,7 @@ function Login(){
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [message, setMessage] = useState("");
+    const [setMessage] = useState("");
 
     const login =()=>{
         const data ={username:username, password:password};
@@ -29,13 +29,15 @@ function Login(){
     };
 
     return(
-        <div>
+        <div className="loginContainer">
+            <label>Username:</label>
             <input 
                 type="text"
                 onChange={(event) =>{
                     setUsername(event.target.value);
                 }}
             />
+            <label>Password:</label>
             <input type="password"
                 onChange={(event)=>{
                     setPassword(event.target.value);
