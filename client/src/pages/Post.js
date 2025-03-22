@@ -26,6 +26,7 @@ function Post(){
             method: "POST", 
             headers: {
                 "Content-Type": "application/json",
+                accessToken: sessionStorage.getItem("accessToken")
             },
             body: JSON.stringify({
                 commentBlock: newComment,
@@ -34,9 +35,13 @@ function Post(){
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log("Comment added:",data);
-            setComments([...comments,data]); // Update state with new comment, "...comments" - previous comments 
-            setNewComment(""); // Clear input field
+            if(data.error){
+                console.log(data.error);
+            }else{
+                console.log("Comment added:",data);
+                setComments([...comments,data]); // Update state with new comment, "...comments" - previous comments 
+                setNewComment(""); // Clear input field
+            }
           }) 
           .catch((error) => console.error("Error fetching posts:", error));
     };

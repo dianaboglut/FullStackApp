@@ -1,10 +1,11 @@
 import React, {useState} from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login(){
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [setMessage] = useState("");
+    const navigate = useNavigate();
 
     const login =()=>{
         const data ={username:username, password:password};
@@ -18,11 +19,10 @@ function Login(){
           .then((response) => response.json())
           .then((data) => {
             if (data.error) {
-                setMessage(data.error); // Display error from backend
+                alert(data.error);
             } else {
-                setMessage("Login successful!");
-                console.log("User logged in:", data);
-                // Here you could redirect the user or save their session
+                sessionStorage.setItem("accessToken", data);
+                navigate("/"); // Use navigate() after login to go to homepage
             }
           }) 
           .catch((error) => console.error("Error fetching posts:", error));
