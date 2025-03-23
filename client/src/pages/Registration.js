@@ -1,8 +1,12 @@
 import React from "react";
 import {Formik, Form, Field, ErrorMessage} from "formik"; // to create form
 import * as Yup from "yup"; // import all from yup
+import { useNavigate } from "react-router-dom";
 
 function Registration(){
+
+    const navigate = useNavigate();
+
     const initialValues={
         username: "",
         password: "",
@@ -23,14 +27,23 @@ function Registration(){
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
+            if(data === "SUCCESS"){
+                alert("Registration successful! Please log in.");
+                navigate("/login");
+            }else{
+                alert("Registration failed.");
+            }
           }) 
           .catch((error) => console.error("Error fetching posts:", error));
     };
 
     return(
-        <div>
-            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+        <div className="registrationContainer">
+            <Formik 
+                initialValues={initialValues} 
+                onSubmit={onSubmit} 
+                validationSchema={validationSchema}
+            >
                 <Form className="formContainer">
                     <label>Username: </label>
                     <ErrorMessage name="username" component="span"/>
@@ -43,6 +56,16 @@ function Registration(){
                     <button type="submit"> Register </button>
                 </Form>
             </Formik>
+
+            <p>
+                Already have an account? 
+                <span 
+                    style={{color:"blue", cursor:"pointer"}}
+                    onClick={()=>navigate("/login")}
+                > 
+                    Login here
+                </span>
+            </p>
         </div>
     )
 }

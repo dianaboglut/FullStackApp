@@ -203,6 +203,8 @@ button {
 
 /* LOGIN */
 
+/* LOGIN */
+
 .loginContainer {
   display: flex;
   align-items: center;
@@ -222,10 +224,36 @@ button {
 }
 
 .loginContainer button {
-  background-color: dodgerblue;
+  background-color: #1da1f2; /* Twitter blue color */
   color: white;
+  border-radius: 9999px; /* Fully rounded corners */
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.loginContainer button:hover {
+  background-color: #0d8ddb; /* Darker blue on hover */
 }
 
 .loginContainer input {
-  border: 2px solid dodgerblue;
+  border: 2px solid #1da1f2; /* Twitter blue color */
+  border-radius: 9999px; /* Fully rounded corners */
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.loginContainer .registerLink {
+  color: #1da1f2;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.loginContainer .registerLink:hover {
+  color: #0d8ddb; /* Darker blue on hover */
+  transform: scale(1.1); /* Slightly enlarge on hover */
 }

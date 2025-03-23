@@ -26,7 +26,7 @@ function Post(){
             method: "POST", 
             headers: {
                 "Content-Type": "application/json",
-                accessToken: sessionStorage.getItem("accessToken")
+                accessToken: localStorage.getItem("accessToken")
             },
             body: JSON.stringify({
                 commentBlock: newComment,
@@ -38,8 +38,8 @@ function Post(){
             if(data.error){
                 console.log(data.error);
             }else{
-                console.log("Comment added:",data);
-                setComments([...comments,data]); // Update state with new comment, "...comments" - previous comments 
+                const commentToAdd = {commentBlock: newComment, username: data.username};
+                setComments([...comments,commentToAdd]); // Update state with new comment, "...comments" - previous comments 
                 setNewComment(""); // Clear input field
             }
           }) 
@@ -70,6 +70,7 @@ function Post(){
                         return (
                             <div key={key} className="comment"> 
                                 {comment.commentBlock}
+                                <label> Username: {comment.username} </label>
                             </div>
                         );
                     })}
