@@ -9,7 +9,7 @@ import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 
 function App() {
-  const [authState, setAuthState] = useState(false);
+  const [authState, setAuthState] = useState({username: "", id: 0, status: false});
 
   useEffect(() => {
     fetch("http://localhost:3001/auth/auth", {
@@ -22,9 +22,9 @@ function App() {
       .then((response) => response.json()) // Parse JSON response
       .then((data) => {
         if (data.error) {
-          setAuthState(false); // If there is an error in response
+          setAuthState({...authState, status: false}); // If there is an error in response
         } else {
-          setAuthState(true); // If no error, user is authenticated
+          setAuthState({username: data.username , id: data.id, status: true}); // If no error, user is authenticated
         }
       })
       .catch((error) => {
@@ -33,6 +33,11 @@ function App() {
       });
   }, []); // Empty dependency array to run effect once on mount
 
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    setAuthState({username: "", id: 0, status: false});
+  };
+
   return (
     <div className="App">
       <AuthContext.Provider value={{ authState, setAuthState }}>
@@ -40,12 +45,16 @@ function App() {
         <div className="navbar">
           <Link to="/"> Home Page </Link> 
           <Link to="/createpost"> Create a post </Link>
-          {!authState && (
+          {!authState.status ? (
               <>
                 <Link to="/login"> Login</Link>
                 <Link to="/registration"> Registration</Link>
               </>
+            ) : (
+              <button onClick={logout}> Logout </button>
             )}
+
+            <h1>{authState.username}</h1>
         </div>
         <Routes>
           <Route path="/" element={<Home />} />

@@ -1,12 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import { useParams } from "react-router-dom";
+import { AuthContext } from "../helpers/AuthContext";
+
 
 function Post(){
     let {id} = useParams();
     const [postObject, setPostObject] = useState({});
     const [comments, setComments] = useState([]); // a list
     const [newComment, setNewComment] = useState("");
-
+    const {authState} = useContext(AuthContext);
+    
     useEffect(() => {
         if (!id) return; // Prevents fetching if id is undefined
     
@@ -46,6 +49,23 @@ function Post(){
           .catch((error) => console.error("Error fetching posts:", error));
     };
 
+    const deleteComment=(id)=>{
+        fetch(`http://localhost:3001/comments/${id}`,{
+            method: "DELETE",
+            headers: {
+                accessToken: localStorage.getItem("accessToken")
+            }
+        })
+          .then(() => {
+            setComments(
+                comments.filter((val) => {
+                    return val.id !== id;
+                })
+            );
+          })
+          .catch((error) => console.error("Error fetching posts:", error));
+    };
+
     return(
         <div className="postPage">
             <div className="leftSide">
@@ -71,6 +91,9 @@ function Post(){
                             <div key={key} className="comment"> 
                                 {comment.commentBlock}
                                 <label> Username: {comment.username} </label>
+                                {authState.username === comment.username && 
+                                    <button onClick={() => {deleteComment(comment.id)}}>Delete</button>
+                                }
                             </div>
                         );
                     })}

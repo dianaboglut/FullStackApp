@@ -24,8 +24,8 @@ function Login(){
             if (data.error) {
                 alert(data.error);
             } else {
-                localStorage.setItem("accessToken", data);
-                setAuthState(true);
+                localStorage.setItem("accessToken", data.token);
+                setAuthState({username: data.username, id: data.id, status: true});
                 navigate("/"); // Use navigate() after login to go to homepage
             }
           }) 

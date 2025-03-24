@@ -121,6 +121,21 @@ span {
   color: white;
 }
 
+.navbar button {
+  width: 100px;
+  height: 40px;
+  cursor: pointer;
+  margin-right: 10px;
+  background-color: white;
+}
+
+.navbar h1 {
+  text-align: right;
+  margin-right: 10px;
+  color: white;
+  font-weight: lighter;
+}
+
 /* INDIVIDUAL POST */
 .postPage {
   display: flex;
